@@ -1,4 +1,4 @@
-// test.js
+// test.js (이전 기능 포함 버전)
 const qs = window.Y40_QUESTIONS ?? [];
 const rs = window.Y40_RESULTS ?? [];
 const panel = document.getElementById("panel");
@@ -28,17 +28,34 @@ const titleMap = {
   "R+_C+_N+_H+": "성장을 설계하는 듀얼마스터 ⚙️🌱",
 };
 
-
 let idx = 0;
 let score = { R: 0, C: 0, N: 0, H: 0 };
 let lastDir = { R: null, C: null, N: null, H: null }; // ✅ 동점 깨기용
 let picked = null;
+// ✅ 이전/다음 이동을 위한 선택 기록
+let answers = Array(qs.length).fill(null);
 
 function addScore(s) {
   for (const k of ["R", "C", "N", "H"]) {
     const v = Number(s?.[k] ?? 0);
     score[k] += v;
     if (v !== 0) lastDir[k] = v > 0 ? "+" : "-";
+  }
+}
+
+// ✅ 전체 재계산(이전 기능을 위해 반드시 필요)
+function recalcScoreAndLastDir() {
+  score = { R: 0, C: 0, N: 0, H: 0 };
+  lastDir = { R: null, C: null, N: null, H: null };
+  for (let i = 0; i < answers.length; i++) {
+    const a = answers[i];
+    if (a == null) continue;
+    const s = qs[i]?.choices?.[a]?.score ?? {};
+    for (const k of ["R", "C", "N", "H"]) {
+      const v = Number(s?.[k] ?? 0);
+      score[k] += v;
+      if (v !== 0) lastDir[k] = v > 0 ? "+" : "-";
+    }
   }
 }
 
@@ -82,7 +99,7 @@ function renderQuestion() {
       </div>
 
       <div class="btn-row">
-        <button class="btn-mini" id="restartBtn">처음으로</button>
+        <button class="btn-mini" id="backBtn">이전</button>
         <button class="btn-next" id="nextBtn" disabled>다음</button>
       </div>
 
@@ -95,17 +112,35 @@ function renderQuestion() {
     </div>
   `;
 
-  picked = null;
+  picked = answers[idx];
 
   const nextBtn = document.getElementById("nextBtn");
-  const restartBtn = document.getElementById("restartBtn");
+  const backBtn = document.getElementById("backBtn");
+  const choiceBtns = panel.querySelectorAll(".choice");
 
-  panel.querySelectorAll(".choice").forEach(btn => {
+  // 이전 선택 복원
+  if (picked !== null && picked !== undefined) {
+    const prevBtn = panel.querySelector(`.choice[data-i="${picked}"]`);
+    if (prevBtn) {
+      prevBtn.classList.add("selected");
+      prevBtn.setAttribute("aria-checked", "true");
+      nextBtn.disabled = false;
+      nextBtn.classList.add("enabled");
+    }
+  }
+
+  // 첫 문항에서는 이전 비활성화
+  if (idx === 0) {
+    backBtn.disabled = true;
+    backBtn.classList.add("disabled");
+  }
+
+  choiceBtns.forEach(btn => {
     btn.addEventListener("click", () => {
       const i = Number(btn.dataset.i);
       picked = i;
 
-      panel.querySelectorAll(".choice").forEach(b => {
+      choiceBtns.forEach(b => {
         b.classList.remove("selected");
         b.setAttribute("aria-checked", "false");
       });
@@ -117,25 +152,33 @@ function renderQuestion() {
     });
   });
 
+  // 다음: 현재 선택 저장 후 다음 문항
   nextBtn.addEventListener("click", () => {
     if (picked === null) return;
-
-    addScore(q.choices[picked].score);
+    answers[idx] = picked;
+    recalcScoreAndLastDir();
 
     idx++;
     if (idx >= qs.length) renderResult();
     else renderQuestion();
   });
 
-  restartBtn.addEventListener("click", () => {
-    idx = 0;
-    score = { R: 0, C: 0, N: 0, H: 0 };
-    lastDir = { R: null, C: null, N: null, H: null };
-    renderQuestion();
+  // 이전: 현재 선택 잠정 저장 후 한 문항 되돌아가기
+  backBtn.addEventListener("click", () => {
+    if (idx > 0) {
+      if (picked !== null) answers[idx] = picked;
+      idx--;
+      picked = answers[idx];
+      recalcScoreAndLastDir();
+      renderQuestion();
+    }
   });
 }
 
 function renderResult() {
+  // 안전하게 최종 재계산
+  recalcScoreAndLastDir();
+
   const key = typeKey();
   const found = rs.find(r => r.key === key) ?? rs[0];
 
@@ -239,6 +282,8 @@ function renderResult() {
     idx = 0;
     score = { R: 0, C: 0, N: 0, H: 0 };
     lastDir = { R: null, C: null, N: null, H: null };
+    picked = null;
+    answers = Array(qs.length).fill(null);
     renderQuestion();
   });
 }
@@ -249,7 +294,6 @@ function escapeHtml(s) {
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
-    .replaceAll("'", "&quot;")
     .replaceAll("'", "&#039;");
 }
 
