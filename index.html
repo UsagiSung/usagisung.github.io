@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>타입테스트</title>
+  <link rel="stylesheet" href="./assets/styles.css" />
+</head>
+<body>
+  <main class="landing">
+    <header class="hero">
+      <h1 class="title">타입테스트</h1>
+      <p class="subtitle">나를 알아가는 모든 콘텐츠</p>
+    </header>
+
+    <section class="card-grid" aria-label="테스트 목록">
+      <!-- 1) 영포티테스트 -->
+      <article class="card">
+        <div class="card-top">
+          <div class="emoji">🔥✨</div>
+          <h2 class="card-title">영포티 테스트</h2>
+          <p class="card-desc">감성/말투/취향으로 보는 “나는 영포티인가?”</p>
+        </div>
+        <a class="btn btn-pink" href="./tests/young40/">테스트 시작하기</a>
+      </article>
+
+      <!-- 2) 준비중 -->
+      <article class="card card-disabled" aria-disabled="true">
+        <div class="card-top">
+          <div class="emoji">💗🔗</div>
+          <h2 class="card-title">성인 애착 유형 테스트</h2>
+          <p class="card-desc">준비중이야 🐇💋</p>
+        </div>
+        <button class="btn btn-red" disabled>테스트 시작하기</button>
+      </article>
+
+      <!-- 3) 준비중 -->
+      <article class="card card-disabled" aria-disabled="true">
+        <div class="card-top">
+          <div class="emoji">🧠👑</div>
+          <h2 class="card-title">나르시시즘 성향 테스트</h2>
+          <p class="card-desc">준비중이야 🐾</p>
+        </div>
+        <button class="btn btn-blue" disabled>테스트 시작하기</button>
+      </article>
+    </section>
+
+    <footer class="footer">
+      <a href="#" class="footer-link" id="aboutLink">About Us</a>
+      <span class="footer-sep">|</span>
+      <a href="#" class="footer-link" id="privacyLink">Privacy Policy</a>
+      <span class="footer-sep">|</span>
+      <a href="#" class="footer-link" id="contactLink">Contact Us</a>
+    </footer>
+  </main>
+
+  <script src="./assets/app.js"></script>
+</body>
+</html>

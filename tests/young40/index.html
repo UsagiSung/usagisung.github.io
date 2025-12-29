@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>영포티 테스트</title>
+  <link rel="stylesheet" href="../../assets/styles.css" />
+  <style>
+    .shell{ width:100%; max-width:860px; margin:0 auto; padding:56px 20px 40px; }
+    .topbar{ display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+    .back{ color:var(--muted); text-decoration:none; font-weight:700; }
+    .panel{ background: linear-gradient(180deg, #162642cc, #101b2ecc); border:1px solid var(--stroke);
+      border-radius:var(--radius); padding:22px; box-shadow: var(--shadow); }
+    .qtitle{ margin:0 0 12px; font-size:22px; font-weight:900; }
+    .qdesc{ margin:0 0 18px; color:var(--muted); }
+    .progress{ height:10px; background:#ffffff14; border-radius:999px; overflow:hidden; margin:12px 0 18px; }
+    .bar{ height:100%; width:0%; background: linear-gradient(90deg, #a855f7, #ec4899); transition:width .18s ease; }
+    .choices{ display:grid; gap:10px; }
+    .choice{
+      width:100%; text-align:left; border:1px solid var(--stroke); background:#0b122055;
+      color:var(--text); border-radius:12px; padding:12px 12px; cursor:pointer;
+      font-weight:800; line-height:1.3;
+    }
+    .choice:hover{ filter:brightness(1.05); }
+    .meta{ display:flex; justify-content:space-between; color:var(--muted); font-size:13px; margin-top:14px;}
+    .result-title{ font-size:30px; margin:0 0 8px; font-weight:1000; }
+    .pill{ display:inline-flex; gap:8px; align-items:center; border:1px solid var(--stroke); border-radius:999px; padding:8px 12px; color:var(--muted); }
+    .result-desc{ color:var(--muted); line-height:1.55; }
+    .row{ display:flex; gap:12px; margin-top:16px; }
+    .row .btn{ margin-top:0; }
+    .ghost{ background:#ffffff12; border:1px solid var(--stroke); color:var(--text); }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="back" href="../../">← 입구로</a>
+      <span class="pill" id="statusPill">영포티 테스트</span>
+    </div>
+
+    <div class="panel" id="panel"></div>
+  </div>
+
+  <script src="./questions.js"></script>
+  <script src="./results.js"></script>
+  <script src="./test.js"></script>
+</body>
+</html>
