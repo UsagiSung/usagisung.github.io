@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>진상 테스트</title>
+  <link rel="stylesheet" href="../../assets/styles.css" />
+  <style>
+  .shell{ width:100%; max-width:980px; margin:0 auto; padding:48px 20px 40px; }
+  .top-progress{
+    display:flex; align-items:flex-end; justify-content:space-between;
+    gap:16px; margin:6px 0 18px;
+  }
+  .top-progress .label{ color:var(--muted); font-size:14px; font-weight:800; }
+  .top-progress .count{ color:#6d7cff; font-weight:900; }
+
+  .progress-wrap{ width:100%; }
+  .progress{
+    height:10px; background:#ffffff14; border-radius:999px; overflow:hidden;
+  }
+  .bar{
+    height:100%; width:0%;
+    background: linear-gradient(90deg, #3b82f6, #06b6d4);
+    transition:width .18s ease;
+  }
+
+  .panel{
+    margin-top:16px;
+    background: linear-gradient(180deg, #162642cc, #101b2ecc);
+    border:1px solid var(--stroke);
+    border-radius:18px;
+    padding:28px 26px 24px;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(10px);
+  }
+
+  .qtitle{
+    margin:8px 0 18px;
+    text-align:center;
+    font-size:26px;
+    font-weight:1000;
+    letter-spacing:-.02em;
+  }
+
+  .choices{ display:grid; gap:14px; margin-top:6px; }
+  .choice{
+    width:100%;
+    border:1px solid #ffffff20;
+    background:#ffffff10;
+    color:var(--text);
+    border-radius:10px;
+    padding:18px 16px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    font-weight:800;
+    transition: filter .12s ease, transform .12s ease, border-color .12s ease;
+  }
+  .choice:hover{ filter:brightness(1.06); }
+  .choice:active{ transform: translateY(1px); }
+
+  .radio{
+    width:18px; height:18px; border-radius:999px;
+    border:2px solid #ffffff26;
+    display:inline-flex; align-items:center; justify-content:center;
+    flex:0 0 auto;
+  }
+  .radio::after{
+    content:"";
+    width:8px; height:8px; border-radius:999px;
+    background:transparent;
+    transition: background .12s ease;
+  }
+  .choice.selected{
+    border-color:#3b82f655;
+    background:#3b82f620;
+  }
+  .choice.selected .radio{
+    border-color:#3b82f6aa;
+  }
+  .choice.selected .radio::after{
+    background:#3b82f6;
+  }
+
+  .btn-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    margin-top:22px;
+  }
+
+  .btn-mini{
+    border:1px solid #fbbf2460;
+    background:transparent;
+    color:#fbbf24;
+    padding:10px 16px;
+    border-radius:10px;
+    font-weight:900;
+    cursor:pointer;
+  }
+
+  .btn-next{
+    background: linear-gradient(90deg, #4338ca, #7c3aed);
+    color:white;
+    border:0;
+    padding:12px 22px;
+    border-radius:12px;
+    font-weight:1000;
+    cursor:pointer;
+    min-width:120px;
+    opacity: .45;
+  }
+  .btn-next.enabled{ opacity: 1; }
+
+  .home-btn{
+    margin:14px auto 0;
+    display:flex;
+    justify-content:center;
+  }
+  .home-btn a{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:12px 16px;
+    border-radius:10px;
+    border:1px solid #ffffff20;
+    background:#ffffff10;
+    color:var(--text);
+    text-decoration:none;
+    font-weight:900;
+  }
+
+  .footer{ margin-top:28px; }
+
+  @media (max-width: 520px){
+    .qtitle{ font-size:22px; }
+    .panel{ padding:22px 16px; }
+  }
+  </style>
+</head>
+
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="back" href="../../">← 홈으로</a>
+      <span class="pill" id="statusPill">진상 테스트</span>
+    </div>
+
+    <div class="panel" id="panel"></div>
+  </div>
+
+  <script src="./questions.js"></script>
+  <script src="./results.js"></script>
+  <script src="./test.js"></script>
+</body>
+</html>
