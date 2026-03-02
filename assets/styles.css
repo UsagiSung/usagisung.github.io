@@ -46,6 +46,29 @@ body{
   font-size:18px;
 }
 
+.daily-pick{
+  margin:24px auto 0;
+  max-width:440px;
+  padding:16px;
+  border:1px solid var(--stroke);
+  border-radius:12px;
+  background:#0f1c31cc;
+  backdrop-filter: blur(8px);
+}
+
+.daily-copy{
+  margin:0 0 12px;
+  font-size:14px;
+  color:var(--muted);
+}
+
+.daily-result{
+  margin:12px 0 0;
+  font-size:14px;
+  min-height:20px;
+  color:#fef08a;
+}
+
 .card-grid{
   width:100%;
   max-width:var(--maxw);
@@ -106,6 +129,7 @@ body{
 .btn-pink{ background: linear-gradient(90deg, #a855f7, #ec4899); }
 .btn-red{ background: linear-gradient(90deg, #f43f5e, #ef4444); }
 .btn-blue{ background: linear-gradient(90deg, #8b5cf6, #3b82f6); }
+.btn-yellow{ background: linear-gradient(90deg, #f59e0b, #facc15); color:#111827; }
 
 .card-disabled{
   opacity:.65;
